@@ -66,3 +66,36 @@ popupButtons.forEach(btn => {
         // Le href="#contact" gère déjà le scroll vers la section Contact Us
     });
 });
+
+// AUTH POPUP
+
+const authPopup = document.getElementById("authPopup");
+const openAuth = document.getElementById("openAuth");
+const closeAuth = authPopup.querySelector(".close");
+
+openAuth.addEventListener("click", (e)=>{
+    e.preventDefault();
+    authPopup.style.display = "flex";
+});
+
+closeAuth.addEventListener("click", ()=>{
+    authPopup.style.display = "none";
+});
+
+// LOGIN / SIGNUP SWITCH
+
+const loginTab = document.getElementById("loginTab");
+const signupTab = document.getElementById("signupTab");
+
+const loginForm = document.getElementById("loginForm");
+const signupForm = document.getElementById("signupForm");
+
+loginTab.addEventListener("click", ()=>{
+    loginForm.style.display="flex";
+    signupForm.style.display="none";
+});
+
+signupTab.addEventListener("click", ()=>{
+    signupForm.style.display="flex";
+    loginForm.style.display="none";
+});

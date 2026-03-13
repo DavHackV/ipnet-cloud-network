@@ -8,6 +8,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
+<nav>
+    <a href="#">Home</a>
+    <a href="#services">Services</a>
+    <a href="#about">About</a>
+    <a href="#" id="openAuth">Contact</a>
+</nav>
+
 <body>
 
 <header>
@@ -109,6 +116,34 @@
     <h3>Cybersecurity</h3>
     <p>We protect your systems, networks, and data from threats using advanced cybersecurity strategies, monitoring, and incident response.</p>
     <a href="#contact" class="btn">Contact Us</a>
+  </div>
+</div>
+
+<!-- Popup Login / Sign Up -->
+<div id="authPopup" class="popup">
+  <div class="popup-content">
+    <span class="close">&times;</span>
+
+    <h3>User Access</h3>
+
+    <div class="auth-tabs">
+        <button id="loginTab" class="btn">Login</button>
+        <button id="signupTab" class="btn">Sign Up</button>
+    </div>
+
+    <form id="loginForm" class="auth-form">
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Password" required>
+        <button class="btn">Login</button>
+    </form>
+
+    <form id="signupForm" class="auth-form" style="display:none;">
+        <input type="text" placeholder="Full Name" required>
+        <input type="email" placeholder="Email" required>
+        <input type="password" placeholder="Password" required>
+        <button class="btn">Create Account</button>
+    </form>
+
   </div>
 </div>
 

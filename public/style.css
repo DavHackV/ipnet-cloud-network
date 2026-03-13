@@ -217,3 +217,24 @@ section.visible { opacity: 1; transform: translateY(0); }
 
 @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
 @keyframes slideIn { from {transform: translateY(-50px);} to {transform: translateY(0);} }
+
+/* Auth Popup */
+
+.auth-tabs{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.auth-form{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.auth-form input{
+    padding:10px;
+    border:none;
+    border-radius:6px;
+}
