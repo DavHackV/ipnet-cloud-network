@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>IPNet Cloud & Network</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+<header>
+    <h1>IPNet Cloud & Network</h1>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<!-- Carrousel central avec overlay et texte Hero -->
+<section class="media-loop">
+    <div class="media-container">
+        <div class="overlay"></div>
+        <div class="hero-text">
+            <h2>Professional Network & Cloud Solutions</h2>
+            <p>We design secure network infrastructure and cloud solutions for modern organizations.</p>
+            <a href="#contact" class="btn">Contact Us</a>
+        </div>
+        <img src="assets/images/network1.jpg" class="media-slide active">
+        <img src="assets/images/cloud1.jpg" class="media-slide">
+        <img src="assets/images/cybersecurity1.jpg" class="media-slide">
+        <video autoplay muted loop class="media-slide">
+            <source src="assets/videos/hero-video.mp4" type="video/mp4">
+        </video>
+    </div>
+</section>
+
+<section id="services" class="services">
+    <h2>Our Services</h2>
+    <div class="service-cards">
+        <div class="service" data-popup="popup-network">
+            <i class="fas fa-network-wired fa-3x"></i>
+            <h3>Network Infrastructure</h3>
+            <p>Design and deployment of secure enterprise networks.</p>
+        </div>
+        <div class="service" data-popup="popup-cloud">
+            <i class="fas fa-cloud fa-3x"></i>
+            <h3>Cloud Solutions</h3>
+            <p>Cloud deployment and management services.</p>
+        </div>
+        <div class="service" data-popup="popup-cyber">
+            <i class="fas fa-shield-alt fa-3x"></i>
+            <h3>Cybersecurity</h3>
+            <p>Protection of digital infrastructure and systems.</p>
+        </div>
+    </div>
+</section>
+
+<section id="about" class="about">
+    <h2>About Us</h2>
+    <p>IPNet Cloud & Network is a leading IT solutions provider, specializing in network infrastructure, cloud solutions, and cybersecurity for modern businesses.</p>
+</section>
+
+<section id="contact" class="contact">
+    <h2>Contact Us</h2>
+    <p>Email: <a href="mailto:contact@groupe2.ipnetinstitute.online">contact@groupe2.ipnetinstitute.online</a></p>
+    <p>Phone: +228 22 51 77 77 / 99 31 07 14</p>
+</section>
+
+<!-- Popups Services -->
+<div id="popup-network" class="popup">
+  <div class="popup-content">
+    <span class="close">&times;</span>
+    <h3>Network Infrastructure</h3>
+    <p>We design and deploy secure enterprise networks with high performance, redundancy, and monitoring. Perfect for organizations that need reliability and speed.</p>
+    <a href="#contact" class="btn">Contact Us</a>
+  </div>
+</div>
+
+<div id="popup-cloud" class="popup">
+  <div class="popup-content">
+    <span class="close">&times;</span>
+    <h3>Cloud Solutions</h3>
+    <p>We provide cloud deployment, management, and migration services. Scale your infrastructure easily and securely with cloud solutions.</p>
+    <a href="#contact" class="btn">Contact Us</a>
+  </div>
+</div>
+
+<div id="popup-cyber" class="popup">
+  <div class="popup-content">
+    <span class="close">&times;</span>
+    <h3>Cybersecurity</h3>
+    <p>We protect your systems, networks, and data from threats using advanced cybersecurity strategies, monitoring, and incident response.</p>
+    <a href="#contact" class="btn">Contact Us</a>
+  </div>
+</div>
+
+<footer>
+    <p>© 2026 IPNet Cloud & Network</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
