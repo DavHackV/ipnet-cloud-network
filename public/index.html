@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <title>IPNet Cloud & Network</title>
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
 <body>
 
 <header>
@@ -16,11 +14,10 @@
         <a href="#">Home</a>
         <a href="#services">Services</a>
         <a href="#about">About</a>
-        <a href="#" id="openAuth">Contact</a>
+        <a href="#contact" id="openAuth">Contact</a>
     </nav>
 </header>
 
-<!-- Carrousel central avec overlay et texte Hero -->
 <section class="media-loop">
     <div class="media-container">
         <div class="overlay"></div>
@@ -66,14 +63,12 @@
 
 <section id="contact" class="contact">
 <h2>Contact Us</h2>
-
 <form action="/contact" method="POST" class="contact-form">
 <input type="text" name="name" placeholder="Your Name" required>
 <input type="email" name="email" placeholder="Your Email" required>
 <textarea name="message" placeholder="Your Message" required></textarea>
 <button type="submit" class="btn">Send Message</button>
 </form>
-
 <p>Email: <a href="mailto:contact@groupe2.ipnetinstitute.online">contact@groupe2.ipnetinstitute.online</a></p>
 <p>Phone: +228 22 51 77 77 / 99 31 07 14</p>
 </section>
@@ -110,27 +105,22 @@
 <div id="authPopup" class="popup">
   <div class="popup-content">
     <span class="close">&times;</span>
-
     <h3>User Access</h3>
-
     <div class="auth-tabs">
         <button id="loginTab" class="btn">Login</button>
         <button id="signupTab" class="btn">Sign Up</button>
     </div>
-
     <form id="loginForm" class="auth-form">
         <input type="email" placeholder="Email" required>
         <input type="password" placeholder="Password" required>
         <button class="btn">Login</button>
     </form>
-
     <form id="signupForm" class="auth-form" style="display:none;">
         <input type="text" placeholder="Full Name" required>
         <input type="email" placeholder="Email" required>
         <input type="password" placeholder="Password" required>
         <button class="btn">Create Account</button>
     </form>
-
   </div>
 </div>
 

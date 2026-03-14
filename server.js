@@ -1,38 +1,39 @@
-const express = require('express');
-const path = require('path');
+// server.js
+const express = require("express");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const path = require("path"); // <-- IMPORTANT
 
-const app = express();
+dotenv.config();
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+const app = express(); // <-- créer app avant de l'utiliser
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// Railway donne un port automatiquement
-const PORT = process.env.PORT || 3000;
+// Servir les fichiers statiques (HTML, CSS, JS, images)
+app.use(express.static(path.join(__dirname)));
 
-// servir les fichiers du site
-app.use(express.static(__dirname));
+// Connexion MongoDB
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => console.log("MongoDB connected"))
+    .catch(err => console.log("MongoDB connection error:", err));
 
-// route principale
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
+// Routes API pour auth
+const authRoutes = require("./routes/authRoutes");
+app.use("/api/auth", authRoutes);
 
+// Route contact
 app.post('/contact', (req, res) => {
-
-    const name = req.body.name;
-    const email = req.body.email;
-    const message = req.body.message;
-
+    const { name, email, message } = req.body;
     console.log("New Contact Message");
     console.log("Name:", name);
     console.log("Email:", email);
     console.log("Message:", message);
-
     res.send("Message received successfully!");
-
 });
 
-// démarrer le serveur
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Server running on port ${PORT}`);
-});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
