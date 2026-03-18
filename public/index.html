@@ -15,7 +15,7 @@
         }
 
         body {
-            font-family: 'Plus_Jakarta_Sans', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-dark);
             color: white;
         }
@@ -49,7 +49,6 @@
             box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.4);
         }
 
-        /* Chat Widget Styles */
         #chatWidget {
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateY(120%);
@@ -78,17 +77,51 @@
             border-bottom-left-radius: 4px;
         }
 
-        /* Video Container Styles */
         .video-overlay {
             background: linear-gradient(0deg, rgba(2, 6, 23, 0.8) 0%, rgba(2, 6, 23, 0.2) 100%);
+        }
+
+        /* Modal flex fix */
+        #authModal {
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        #authModal.show {
+            display: flex;
+        }
+
+        /* Notification toast */
+        #toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #1e3a8a;
+            border: 1px solid #3b82f6;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 700;
+            z-index: 9999;
+            transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+            white-space: nowrap;
+        }
+        #toast.show {
+            transform: translateX(-50%) translateY(0);
         }
     </style>
 </head>
 <body class="overflow-x-hidden selection:bg-blue-500/30">
 
+    <!-- Toast notification -->
+    <div id="toast"></div>
+
     <div class="glow-sphere w-96 h-96 bg-blue-600 top-[-10%] left-[-5%] animate-float"></div>
     <div class="glow-sphere w-[500px] h-[500px] bg-yellow-500 bottom-[-10%] right-[-5%] animate-float" style="animation-delay: 2s;"></div>
 
+    <!-- HEADER -->
     <header class="fixed w-full top-0 z-[100] backdrop-blur-xl border-b border-white/5 bg-black/20">
         <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
             <a href="#" class="flex items-center gap-3 group">
@@ -106,12 +139,12 @@
                 </div>
                 <div class="h-6 w-[1px] bg-white/10"></div>
                 
-                <!-- Guest State -->
+                <!-- Bouton Espace Client -->
                 <button id="navOpenAuth" class="px-6 py-2.5 rounded-xl bg-blue-600 text-white font-black text-xs uppercase tracking-widest hover:bg-blue-500 hover:scale-105 active:scale-95 transition-all shadow-lg shadow-blue-600/20">
                     Espace Client
                 </button>
                 
-                <!-- Auth State (Hidden by default) -->
+                <!-- Profil Utilisateur (masqué par défaut) -->
                 <div id="userProfile" class="hidden flex items-center gap-4">
                     <button id="openChatBtn" class="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center hover:bg-white/10 transition-colors relative">
                         <i class="fas fa-comment-dots text-blue-400"></i>
@@ -130,11 +163,17 @@
                     </div>
                 </div>
             </nav>
+
+            <!-- Mobile burger -->
+            <button id="mobileBurger" class="md:hidden w-10 h-10 flex items-center justify-center text-gray-400 hover:text-white">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </header>
 
+    <!-- MAIN CONTENT -->
     <main>
-        <!-- HERO SECTION -->
+        <!-- HERO -->
         <section class="relative pt-48 pb-32 px-6">
             <div class="max-w-7xl mx-auto text-center">
                 <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-[10px] font-black tracking-[0.2em] uppercase mb-10 animate-bounce">
@@ -159,7 +198,7 @@
             </div>
         </section>
 
-        <!-- SERVICES SECTION -->
+        <!-- SERVICES -->
         <section id="services" class="max-w-7xl mx-auto px-6 py-32 scroll-mt-24">
             <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8 border-l-4 border-blue-600 pl-8">
                 <div class="max-w-xl">
@@ -168,31 +207,31 @@
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="glass-card p-10 rounded-[2.5rem]">
+                <div class="glass-card p-10 rounded-[2.5rem] hover:-translate-y-2 transition-transform">
                     <div class="w-16 h-16 bg-blue-600/20 rounded-2xl flex items-center justify-center text-blue-500 mb-8">
                         <i class="fas fa-project-diagram fa-2x"></i>
                     </div>
                     <h3 class="text-2xl font-black mb-4 italic">Core Networking</h3>
-                    <p class="text-gray-400">Conception de backbones LAN/WAN performants.</p>
+                    <p class="text-gray-400">Conception de backbones LAN/WAN performants avec redondance et failover automatisé.</p>
                 </div>
-                <div class="glass-card p-10 rounded-[2.5rem]">
+                <div class="glass-card p-10 rounded-[2.5rem] hover:-translate-y-2 transition-transform">
                     <div class="w-16 h-16 bg-yellow-500/20 rounded-2xl flex items-center justify-center text-yellow-500 mb-8">
                         <i class="fas fa-cloud-upload-alt fa-2x"></i>
                     </div>
                     <h3 class="text-2xl font-black mb-4 italic">Cloud DevSecOps</h3>
-                    <p class="text-gray-400">Automatisation et déploiement Kubernetes.</p>
+                    <p class="text-gray-400">Automatisation et déploiement Kubernetes sur infrastructure multi-cloud.</p>
                 </div>
-                <div class="glass-card p-10 rounded-[2.5rem]">
-                    <div class="w-16 h-16 bg-red-600/20 rounded-2xl flex items-center justify-center text-red-600 mb-8">
+                <div class="glass-card p-10 rounded-[2.5rem] hover:-translate-y-2 transition-transform">
+                    <div class="w-16 h-16 bg-red-600/20 rounded-2xl flex items-center justify-center text-red-500 mb-8">
                         <i class="fas fa-user-secret fa-2x"></i>
                     </div>
                     <h3 class="text-2xl font-black mb-4 italic">Security Ops</h3>
-                    <p class="text-gray-400">Surveillance SIEM/SOC 24/7.</p>
+                    <p class="text-gray-400">Surveillance SIEM/SOC 24/7 avec détection proactive des menaces.</p>
                 </div>
             </div>
         </section>
 
-        <!-- ABOUT SECTION -->
+        <!-- ABOUT -->
         <section id="about" class="max-w-7xl mx-auto px-6 py-32 border-t border-white/5 scroll-mt-24">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
                 <div class="relative">
@@ -203,36 +242,47 @@
                     </p>
                     <ul class="space-y-4">
                         <li class="flex items-center gap-4 text-sm font-bold">
-                            <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center"><i class="fas fa-check text-[10px]"></i></div>
+                            <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0"><i class="fas fa-check text-[10px]"></i></div>
                             Disponibilité garantie à 99.99% (SLA)
                         </li>
                         <li class="flex items-center gap-4 text-sm font-bold">
-                            <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center"><i class="fas fa-check text-[10px]"></i></div>
+                            <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0"><i class="fas fa-check text-[10px]"></i></div>
                             Support technique expert 24h/7j
                         </li>
                         <li class="flex items-center gap-4 text-sm font-bold">
-                            <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center"><i class="fas fa-check text-[10px]"></i></div>
+                            <div class="w-6 h-6 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0"><i class="fas fa-check text-[10px]"></i></div>
                             Certifications ISO/IEC 27001
                         </li>
                     </ul>
                 </div>
                 
-                <!-- VIDEO AREA UPDATED -->
+                <!-- ZONE VIDÉO -->
                 <div class="glass-card p-4 rounded-[3rem] rotate-3 hover:rotate-0 transition-transform duration-500 group">
                     <div class="bg-gray-900 rounded-[2.5rem] overflow-hidden aspect-video relative">
-                        <!-- Preview Image (Visible before play) -->
-                        <img id="videoPreview" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=800" alt="Datacenter" class="w-full h-full object-cover opacity-50 group-hover:scale-110 transition-transform duration-700">
                         
-                        <!-- Real Video Element (Hidden initially) -->
-                        <video id="mainVideo" class="hidden w-full h-full object-cover" controls>
-                            <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-server-room-and-data-center-32864-large.mp4" type="video/mp4">
-                            Votre navigateur ne supporte pas la lecture de vidéos.
-                        </video>
+                        <!-- Image de prévisualisation -->
+                        <img id="videoPreview" 
+                             src="https://images.unsplash.com/photo-1558494949-ef010cbdcc51?auto=format&fit=crop&q=80&w=800" 
+                             alt="Datacenter" 
+                             class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-110 transition-transform duration-700">
+                        
+                        <!-- Conteneur Iframe YouTube (masqué initialement) -->
+                        <div id="videoContainer" class="absolute inset-0 w-full h-full" style="display:none;">
+                            <iframe id="youtubeIframe" 
+                                    width="100%" 
+                                    height="100%" 
+                                    src="" 
+                                    title="YouTube video player" 
+                                    frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                    allowfullscreen>
+                            </iframe>
+                        </div>
 
-                        <!-- Video Overlay & Play Button -->
-                        <div id="videoOverlay" class="absolute inset-0 flex items-center justify-center video-overlay transition-opacity duration-300">
-                            <button onclick="playVideo()" class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center shadow-2xl shadow-blue-600/50 cursor-pointer hover:scale-110 transition-transform active:scale-95">
-                                <i class="fas fa-play ml-1 text-white"></i>
+                        <!-- Overlay et Bouton Play -->
+                        <div id="videoOverlay" class="absolute inset-0 flex items-center justify-center video-overlay cursor-pointer" onclick="playVideo()">
+                            <button class="w-20 h-20 bg-blue-600 rounded-full flex items-center justify-center shadow-2xl shadow-blue-600/50 hover:scale-110 transition-transform active:scale-95 pointer-events-none">
+                                <i class="fas fa-play ml-1 text-white text-xl"></i>
                             </button>
                             <div class="absolute bottom-6 left-6 text-left">
                                 <span class="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400">Présentation</span>
@@ -245,34 +295,77 @@
         </section>
     </main>
 
-    <!-- MODAL AUTH -->
-    <div id="authModal" class="fixed inset-0 z-[200] hidden flex items-center justify-center p-4">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-md" onclick="closeAllModals()"></div>
-        <div class="relative w-full max-w-md bg-[#0f172a] border border-white/10 rounded-[2.5rem] p-10 shadow-2xl animate-in zoom-in-95 duration-300">
-            <button onclick="closeAllModals()" class="absolute top-8 right-8 text-gray-500 hover:text-white">
+    <!-- FOOTER -->
+    <footer class="border-t border-white/5 py-12 text-center text-gray-600 text-xs font-bold">
+        © 2025 IPNet Cloud & Network. Tous droits réservés.
+    </footer>
+
+    <!-- ============================================================ -->
+    <!-- MODAL AUTH (Espace Client)                                    -->
+    <!-- ============================================================ -->
+    <div id="authModal" class="fixed inset-0 z-[200] p-4" role="dialog" aria-modal="true">
+        <!-- Backdrop -->
+        <div id="authBackdrop" class="absolute inset-0 bg-black/80 backdrop-blur-md"></div>
+        
+        <!-- Panel -->
+        <div class="relative w-full max-w-md mx-auto mt-16 bg-[#0f172a] border border-white/10 rounded-[2.5rem] p-10 shadow-2xl">
+            <!-- Close -->
+            <button id="closeAuthModal" class="absolute top-8 right-8 text-gray-500 hover:text-white transition-colors">
                 <i class="fas fa-times text-xl"></i>
             </button>
+            
             <div class="text-center mb-8">
-                <h3 class="text-2xl font-black tracking-tight" id="authTitle">Console IPNet</h3>
+                <div class="w-14 h-14 bg-gradient-to-tr from-blue-600 to-indigo-400 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <i class="fas fa-network-wired text-white text-xl"></i>
+                </div>
+                <h3 class="text-2xl font-black tracking-tight">Console IPNet</h3>
                 <p class="text-gray-400 text-xs mt-2">Accédez à vos ressources sécurisées.</p>
             </div>
+
+            <!-- Tabs -->
             <div class="flex bg-black/40 p-1.5 rounded-2xl mb-8 border border-white/5">
-                <button onclick="switchTab('login')" id="tabLogin" class="flex-1 py-3 rounded-xl font-bold text-xs tab-active">Connexion</button>
-                <button onclick="switchTab('signup')" id="tabSignup" class="flex-1 py-3 rounded-xl font-bold text-xs text-gray-400">Inscription</button>
+                <button id="tabLogin" onclick="switchTab('login')" class="flex-1 py-3 rounded-xl font-bold text-xs tab-active transition-all">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Connexion
+                </button>
+                <button id="tabSignup" onclick="switchTab('signup')" class="flex-1 py-3 rounded-xl font-bold text-xs text-gray-400 transition-all">
+                    <i class="fas fa-user-plus mr-2"></i>Inscription
+                </button>
             </div>
-            <form id="authForm" class="space-y-5">
+
+            <!-- Form -->
+            <form id="authForm" class="space-y-4" novalidate>
+                <!-- Champs Nom/Prénom (inscription seulement) -->
                 <div id="nameFields" class="hidden grid grid-cols-2 gap-4">
-                    <input type="text" id="firstName" placeholder="Prénom" class="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-blue-600">
-                    <input type="text" id="lastName" placeholder="Nom" class="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-blue-600">
+                    <div>
+                        <input type="text" id="firstName" placeholder="Prénom" 
+                               class="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-sm focus:outline-none focus:border-blue-500 transition-colors placeholder-gray-600">
+                    </div>
+                    <div>
+                        <input type="text" id="lastName" placeholder="Nom" 
+                               class="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-sm focus:outline-none focus:border-blue-500 transition-colors placeholder-gray-600">
+                    </div>
                 </div>
-                <input type="email" id="email" placeholder="Email" class="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-blue-600" required>
-                <input type="password" id="password" placeholder="Mot de passe" class="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 focus:outline-none focus:border-blue-600" required>
-                <button type="submit" id="submitBtn" class="w-full bg-blue-600 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-blue-600/20 hover:bg-blue-500 transition-all">Démarrer la session</button>
+
+                <input type="email" id="emailInput" placeholder="Adresse email" 
+                       class="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-sm focus:outline-none focus:border-blue-500 transition-colors placeholder-gray-600" required>
+                
+                <input type="password" id="passwordInput" placeholder="Mot de passe" 
+                       class="w-full bg-black/40 border border-white/10 rounded-2xl px-5 py-4 text-sm focus:outline-none focus:border-blue-500 transition-colors placeholder-gray-600" required>
+
+                <!-- Message d'erreur -->
+                <p id="authError" class="hidden text-red-400 text-xs font-bold px-2"></p>
+
+                <button type="submit" id="submitBtn" 
+                        class="w-full bg-blue-600 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-blue-600/20 hover:bg-blue-500 active:scale-98 transition-all mt-2">
+                    Démarrer la session
+                </button>
             </form>
         </div>
     </div>
 
-    <!-- CHAT WIDGET -->
+    <!-- ============================================================ -->
+    <!-- CHAT WIDGET                                                   -->
+    <!-- ============================================================ -->
     <div id="chatWidget" class="fixed bottom-6 right-6 w-[400px] h-[600px] max-w-[90vw] max-h-[80vh] bg-[#0f172a] border border-white/10 rounded-[2.5rem] shadow-2xl z-[150] flex flex-col overflow-hidden">
         <div class="p-6 bg-blue-600 flex justify-between items-center">
             <div class="flex items-center gap-3">
@@ -284,195 +377,256 @@
                     <span class="text-[10px] text-blue-100 font-bold opacity-80">En direct</span>
                 </div>
             </div>
-            <button onclick="toggleChat()" class="text-white/60 hover:text-white"><i class="fas fa-times"></i></button>
+            <button id="closeChatBtn" class="text-white/60 hover:text-white"><i class="fas fa-times"></i></button>
         </div>
-        <div id="chatMessages" class="flex-1 p-6 overflow-y-auto flex flex-col gap-2 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]">
-            <div class="text-center text-[10px] uppercase font-bold text-gray-500 my-4 tracking-widest">Initialisation...</div>
+        <div id="chatMessages" class="flex-1 p-6 overflow-y-auto flex flex-col gap-2">
+            <div class="text-center text-[10px] uppercase font-bold text-gray-500 my-4 tracking-widest">Connexion sécurisée</div>
         </div>
         <form id="chatInputForm" class="p-4 bg-black/20 border-t border-white/5 flex gap-3">
-            <input type="text" id="messageInput" placeholder="Écrire un message..." class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500" autocomplete="off">
-            <button type="submit" class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center hover:bg-blue-500 transition-all">
+            <input type="text" id="messageInput" placeholder="Écrire un message..." 
+                   class="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 transition-colors" autocomplete="off">
+            <button type="submit" class="w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center hover:bg-blue-500 transition-all flex-shrink-0">
                 <i class="fas fa-paper-plane text-sm"></i>
             </button>
         </form>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, onSnapshot, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <!-- ============================================================ -->
+    <!-- SCRIPTS                                                       -->
+    <!-- ============================================================ -->
 
-        const firebaseConfig = JSON.parse(__firebase_config);
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+    <!-- 1. VIDÉO — script global standard (PAS de type="module") -->
+    <script>
+        function playVideo() {
+            const container  = document.getElementById('videoContainer');
+            const overlay    = document.getElementById('videoOverlay');
+            const preview    = document.getElementById('videoPreview');
+            const iframe     = document.getElementById('youtubeIframe');
 
-        let currentUser = null;
-        let authMode = 'login';
-        let chatUnsubscribe = null;
+            const videoId = "hoTyuQhPSqU";
+            iframe.src = "https://www.youtube.com/embed/" + videoId + "?autoplay=1&rel=0&modestbranding=1";
 
-        const authModal = document.getElementById('authModal');
-        const authForm = document.getElementById('authForm');
-        const chatWidget = document.getElementById('chatWidget');
-        const chatMessages = document.getElementById('chatMessages');
-        const chatInputForm = document.getElementById('chatInputForm');
-        const messageInput = document.getElementById('messageInput');
+            // Masquer overlay et preview
+            overlay.style.display  = 'none';
+            preview.style.display  = 'none';
+            // Afficher l'iframe
+            container.style.display = 'block';
+        }
+    </script>
 
-        // VIDEO LOGIC
-        window.playVideo = () => {
-            const video = document.getElementById('mainVideo');
-            const overlay = document.getElementById('videoOverlay');
-            const preview = document.getElementById('videoPreview');
-
-            overlay.classList.add('opacity-0');
-            overlay.style.pointerEvents = 'none';
-            preview.classList.add('hidden');
-            video.classList.remove('hidden');
-            video.play();
-        };
-
-        // Gérer l'état de l'utilisateur
-        onAuthStateChanged(auth, (user) => {
-            const sessionActive = localStorage.getItem('ipnet_session_active') === 'true';
-            if (user && sessionActive) {
-                currentUser = user;
-                const storedName = localStorage.getItem('ipnet_user_name') || "Utilisateur";
-                updateUI(true, storedName);
-                setupChatListener();
-            } else {
-                currentUser = null;
-                updateUI(false);
-                if (chatUnsubscribe) chatUnsubscribe();
-            }
-        });
-
-        async function handleAuth() {
-            try {
-                const userCredential = await signInAnonymously(auth);
-                return userCredential.user;
-            } catch (err) {
-                console.error("Erreur Auth:", err);
-            }
+    <!-- 2. AUTH + CHAT — logique principale -->
+    <script>
+        /* ── Utilitaires ── */
+        function showToast(msg, duration = 3000) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), duration);
         }
 
-        function updateUI(isLoggedIn, name = "") {
-            const guestBtn = document.getElementById('navOpenAuth');
-            const profileArea = document.getElementById('userProfile');
-            const userDisplayName = document.getElementById('userDisplayName');
-            const userInitial = document.getElementById('userInitial');
+        /* ── Modal Auth ── */
+        const authModal  = document.getElementById('authModal');
+        const authForm   = document.getElementById('authForm');
+        const authError  = document.getElementById('authError');
+        const submitBtn  = document.getElementById('submitBtn');
 
-            if (isLoggedIn) {
-                guestBtn.classList.add('hidden');
-                profileArea.classList.remove('hidden');
-                userDisplayName.innerText = name;
-                userInitial.innerText = name.charAt(0).toUpperCase();
-            } else {
-                guestBtn.classList.remove('hidden');
-                profileArea.classList.add('hidden');
-                chatWidget.classList.remove('open');
-            }
+        function openAuthModal(tab) {
+            authModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            switchTab(tab || 'login');
         }
 
-        // Logic de Connexion / Inscription
-        authForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const firstName = document.getElementById('firstName').value || email.split('@')[0];
-
-            await handleAuth();
-            localStorage.setItem('ipnet_user_name', firstName);
-            localStorage.setItem('ipnet_user_email', email);
-            localStorage.setItem('ipnet_session_active', 'true');
-
-            closeAllModals();
-            location.reload();
-        });
-
-        // Déconnexion
-        document.getElementById('logoutBtn').addEventListener('click', async () => {
-            await signOut(auth);
-            localStorage.removeItem('ipnet_session_active');
-            localStorage.removeItem('ipnet_user_name');
-            location.reload();
-        });
-
-        // CHAT LOGIC
-        function setupChatListener() {
-            if (!currentUser) return;
-            if (chatUnsubscribe) chatUnsubscribe();
-
-            const chatRef = collection(db, 'artifacts', appId, 'public', 'data', 'global_messages');
-            const q = query(chatRef, orderBy('timestamp', 'asc'));
-
-            chatUnsubscribe = onSnapshot(q, (snapshot) => {
-                chatMessages.innerHTML = '<div class="text-center text-[10px] uppercase font-bold text-gray-500 my-4 tracking-widest">Connexion Sécurisée E2E</div>';
-                snapshot.forEach((doc) => displayMessage(doc.data()));
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, (error) => console.error("Erreur de flux:", error));
+        function closeAuthModal() {
+            authModal.classList.remove('show');
+            document.body.style.overflow = '';
+            authError.classList.add('hidden');
+            authForm.reset();
         }
 
-        function displayMessage(data) {
-            const isMe = data.senderId === currentUser.uid;
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `message-bubble ${isMe ? 'msg-sent' : 'msg-received'}`;
-            msgDiv.innerHTML = `
-                ${!isMe ? `<div class="text-[9px] font-black uppercase opacity-60 mb-1">${data.senderName}</div>` : ''}
-                <div>${data.text || ''}</div>
-            `;
-            chatMessages.appendChild(msgDiv);
-        }
+        // Fermeture via bouton × et backdrop
+        document.getElementById('closeAuthModal').addEventListener('click', closeAuthModal);
+        document.getElementById('authBackdrop').addEventListener('click', closeAuthModal);
 
-        chatInputForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const text = messageInput.value.trim();
-            if (!text || !currentUser) return;
-            messageInput.value = '';
-            try {
-                await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'global_messages'), {
-                    text: text,
-                    senderId: currentUser.uid,
-                    senderName: localStorage.getItem('ipnet_user_name') || "Anonyme",
-                    timestamp: serverTimestamp()
-                });
-            } catch (err) { console.error("Envoi échoué:", err); }
+        // Fermeture avec Échap
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeAuthModal();
         });
 
-        // UI HELPERS
-        window.switchTab = (mode) => {
-            authMode = mode;
+        /* ── Tabs ── */
+        function switchTab(mode) {
             const nameFields = document.getElementById('nameFields');
-            const tabLogin = document.getElementById('tabLogin');
-            const tabSignup = document.getElementById('tabSignup');
-            const submitBtn = document.getElementById('submitBtn');
+            const tabLogin   = document.getElementById('tabLogin');
+            const tabSignup  = document.getElementById('tabSignup');
+
+            authError.classList.add('hidden');
 
             if (mode === 'login') {
                 nameFields.classList.add('hidden');
+                nameFields.style.display = 'none';
                 tabLogin.classList.add('tab-active');
+                tabLogin.classList.remove('text-gray-400');
                 tabSignup.classList.remove('tab-active');
-                submitBtn.innerText = "Démarrer la session";
+                tabSignup.classList.add('text-gray-400');
+                submitBtn.textContent = 'Démarrer la session';
             } else {
                 nameFields.classList.remove('hidden');
+                nameFields.style.display = 'grid';
                 tabSignup.classList.add('tab-active');
+                tabSignup.classList.remove('text-gray-400');
                 tabLogin.classList.remove('tab-active');
-                submitBtn.innerText = "Créer mon compte";
+                tabLogin.classList.add('text-gray-400');
+                submitBtn.textContent = 'Créer mon compte';
             }
-        };
+        }
 
-        window.toggleChat = () => chatWidget.classList.toggle('open');
+        /* ── Boutons d'ouverture du modal ── */
+        document.getElementById('navOpenAuth').addEventListener('click', () => openAuthModal('login'));
+        document.getElementById('heroOpenContact').addEventListener('click', () => openAuthModal('signup'));
+
+        /* ── Soumission du formulaire ── */
+        authForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const email    = document.getElementById('emailInput').value.trim();
+            const password = document.getElementById('passwordInput').value;
+            const firstName= document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const isSignup = !document.getElementById('nameFields').classList.contains('hidden');
+
+            // Validation basique
+            if (!email || !password) {
+                showAuthError('Veuillez remplir tous les champs.');
+                return;
+            }
+            if (!/\S+@\S+\.\S+/.test(email)) {
+                showAuthError('Adresse email invalide.');
+                return;
+            }
+            if (password.length < 6) {
+                showAuthError('Le mot de passe doit contenir au moins 6 caractères.');
+                return;
+            }
+
+            const displayName = isSignup
+                ? ((firstName || email.split('@')[0]) + (lastName ? ' ' + lastName : ''))
+                : (localStorage.getItem('ipnet_user_name') || email.split('@')[0]);
+
+            // Simulation connexion/inscription (remplacer par Firebase Auth si besoin)
+            localStorage.setItem('ipnet_user_name', displayName);
+            localStorage.setItem('ipnet_user_email', email);
+            localStorage.setItem('ipnet_session_active', 'true');
+
+            closeAuthModal();
+            updateUILoggedIn(displayName);
+            showToast(isSignup ? '✅ Compte créé avec succès !' : '✅ Connexion réussie !');
+        });
+
+        function showAuthError(msg) {
+            authError.textContent = msg;
+            authError.classList.remove('hidden');
+        }
+
+        /* ── Mise à jour UI selon état session ── */
+        function updateUILoggedIn(name) {
+            document.getElementById('navOpenAuth').classList.add('hidden');
+            const profile = document.getElementById('userProfile');
+            profile.classList.remove('hidden');
+            profile.style.display = 'flex';
+            document.getElementById('userDisplayName').textContent = name;
+            document.getElementById('userInitial').textContent = name.charAt(0).toUpperCase();
+        }
+
+        function updateUILoggedOut() {
+            document.getElementById('navOpenAuth').classList.remove('hidden');
+            const profile = document.getElementById('userProfile');
+            profile.classList.add('hidden');
+            profile.style.display = 'none';
+            closeChatWidget();
+        }
+
+        // Vérification session existante au chargement
+        window.addEventListener('DOMContentLoaded', () => {
+            const sessionActive = localStorage.getItem('ipnet_session_active') === 'true';
+            const userName      = localStorage.getItem('ipnet_user_name');
+            if (sessionActive && userName) {
+                updateUILoggedIn(userName);
+            }
+            // S'assurer que le modal est bien caché au départ
+            authModal.classList.remove('show');
+        });
+
+        /* ── Déconnexion ── */
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('ipnet_session_active');
+            localStorage.removeItem('ipnet_user_name');
+            localStorage.removeItem('ipnet_user_email');
+            updateUILoggedOut();
+            showToast('👋 Déconnexion effectuée.');
+        });
+
+        /* ── Chat Widget ── */
+        const chatWidget = document.getElementById('chatWidget');
+        const messages   = [];
+
+        function toggleChat() {
+            chatWidget.classList.toggle('open');
+        }
+
+        function closeChatWidget() {
+            chatWidget.classList.remove('open');
+        }
+
         document.getElementById('openChatBtn').addEventListener('click', toggleChat);
-        window.closeAllModals = () => {
-            authModal.classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        };
-        document.getElementById('navOpenAuth').addEventListener('click', () => {
-            authModal.classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
+        document.getElementById('closeChatBtn').addEventListener('click', toggleChat);
+
+        // Envoi de message (simulation locale — brancher Firebase si besoin)
+        document.getElementById('chatInputForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const input = document.getElementById('messageInput');
+            const text  = input.value.trim();
+            if (!text) return;
+            input.value = '';
+
+            const userName = localStorage.getItem('ipnet_user_name') || 'Anonyme';
+            addMessageToChat(text, userName, true);
+
+            // Réponse automatique simulée
+            setTimeout(() => {
+                addMessageToChat('Merci pour votre message. Notre équipe vous répondra sous peu.', 'Support IPNet', false);
+            }, 1200);
         });
-        document.getElementById('heroOpenContact').addEventListener('click', () => {
-            authModal.classList.remove('hidden');
-            switchTab('signup');
-        });
+
+        function addMessageToChat(text, senderName, isMe) {
+            const chatMessages = document.getElementById('chatMessages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'message-bubble ' + (isMe ? 'msg-sent' : 'msg-received');
+            msgDiv.style.alignSelf = isMe ? 'flex-end' : 'flex-start';
+            msgDiv.innerHTML = (!isMe ? `<div style="font-size:9px;font-weight:800;text-transform:uppercase;opacity:0.6;margin-bottom:4px;">${senderName}</div>` : '')
+                + `<div>${text}</div>`;
+            chatMessages.appendChild(msgDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
     </script>
+
+    <!-- 3. Firebase (optionnel — décommenter et configurer si vous avez un projet Firebase) -->
+    <!--
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, onSnapshot, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "VOTRE_API_KEY",
+            authDomain: "VOTRE_AUTH_DOMAIN",
+            projectId: "VOTRE_PROJECT_ID",
+            // ...
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        // Brancher la logique d'auth et de chat ici...
+    </script>
+    -->
+
 </body>
 </html>
