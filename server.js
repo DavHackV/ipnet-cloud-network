@@ -1,39 +1,61 @@
-// server.js
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const bodyParser = require("body-parser");
 const cors = require("cors");
-const path = require("path"); // <-- IMPORTANT
+const path = require("path");
 
 dotenv.config();
 
-const app = express(); // <-- créer app avant de l'utiliser
+const app = express();
+
+// ===============================
+// MIDDLEWARE
+// ===============================
+
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// Servir les fichiers statiques (HTML, CSS, JS, images)
-app.use(express.static(path.join(__dirname)));
+// ===============================
+// STATIC FILES
+// ===============================
 
-// Connexion MongoDB
+app.use(express.static(path.join(__dirname, "public")));
+
+// ===============================
+// MONGODB CONNECTION
+// ===============================
+
 mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log("MongoDB connected"))
-    .catch(err => console.log("MongoDB connection error:", err));
-
-// Routes API pour auth
-const authRoutes = require("./routes/authRoutes");
-app.use("/api/auth", authRoutes);
-
-// Route contact
-app.post('/contact', (req, res) => {
-    const { name, email, message } = req.body;
-    console.log("New Contact Message");
-    console.log("Name:", name);
-    console.log("Email:", email);
-    console.log("Message:", message);
-    res.send("Message received successfully!");
+.then(() => {
+    console.log("✅ MongoDB Connected");
+})
+.catch(err => {
+    console.log("❌ MongoDB Error:", err);
 });
 
+// ===============================
+// ROUTES
+// ===============================
+
+const authRoutes = require("./routes/authRoutes");
+
+app.use("/api/auth", authRoutes);
+
+// ===============================
+// DEFAULT ROUTE
+// ===============================
+
+app.get("/", (req,res)=>{
+    res.sendFile(path.join(__dirname,"public","index.html"));
+});
+
+// ===============================
+// START SERVER
+// ===============================
+
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+app.listen(PORT, ()=>{
+    console.log(`🚀 Server running on port ${PORT}`);
+});
